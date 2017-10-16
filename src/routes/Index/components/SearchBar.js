@@ -12,6 +12,7 @@ export class SearchBarComponent extends React.Component {
     handleSubmit: PropTypes.func.isRequired,
     searchInProgress: PropTypes.bool.isRequired,
     query: PropTypes.string,
+    blur: PropTypes.func.isRequired
   }
 
   constructor (props) {
@@ -31,7 +32,7 @@ export class SearchBarComponent extends React.Component {
     })
   }
 
-  handleKeyUp () {
+  handleKeyUp (e) {
     clearTimeout(this.keyUpTimeout)
     this.keyUpTimeout = setTimeout(() => {
       http.get('/search/autocomplete', {
@@ -47,7 +48,7 @@ export class SearchBarComponent extends React.Component {
   }
 
   render () {
-    const { handleSubmit, searchInProgress } = this.props
+    const { handleSubmit, searchInProgress, blur } = this.props
     const { autocompleteList } = this.state
 
     return (
@@ -63,6 +64,14 @@ export class SearchBarComponent extends React.Component {
             disabled={searchInProgress}
             list={autocompleteList}
             onKeyUp={this.handleKeyUp}
+            onKeyDown={(e) => {
+              if (e.keyCode === 13 && e.shiftKey === false) {
+                blur('query')
+              }
+            }}
+            submit={handleSubmit}
+            withRef
+            ref='input'
           />
         </form>
       </div>

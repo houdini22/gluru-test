@@ -24,6 +24,9 @@ class TextField extends React.Component {
 
   setValue (value) {
     this.props.input.onChange(value)
+    this.setState({
+      autocompleteActive: false
+    })
   }
 
   componentWillReceiveProps (nextProps) {
@@ -32,7 +35,7 @@ class TextField extends React.Component {
         autocompleteActive: true
       })
     } else {
-      setTimeout(() => {
+      setTimeout(() => { // temp hack
         this.setState({
           autocompleteActive: false
         })
@@ -41,7 +44,7 @@ class TextField extends React.Component {
   }
 
   render () {
-    const { input, label, meta: { touched, error }, containerClassName, hideFeedback, list, ...custom } = this.props
+    const { input, label, meta: { touched, error }, containerClassName, hideFeedback, list, submit, ...custom } = this.props
     const { autocompleteActive } = this.state
 
     let validationState = null
@@ -52,7 +55,7 @@ class TextField extends React.Component {
     return (
       <FormGroup color={validationState} className={containerClassName} styleName='form-group'>
         <div styleName='field-container'>
-          <Input {...input} {...custom} autoComplete='off' state={validationState}/>
+          <Input {...input} {...custom} autoComplete='off' state={validationState} innerRef='input'/>
           {list && list.items && autocompleteActive && (
             <ul styleName='list'>
               {list.items.map((obj) => {
@@ -61,9 +64,7 @@ class TextField extends React.Component {
                   value={obj.value}
                   onClick={() => {
                     this.setValue(obj.value)
-                    this.setState({
-                      autocompleteActive: false
-                    })
+                    submit()
                   }}
                 >
                   {obj.label}
