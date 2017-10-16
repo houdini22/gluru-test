@@ -22,10 +22,12 @@ class TextField extends React.Component {
     }
   }
 
-  setValue (value) {
+  setValue (value, cb) {
     this.props.input.onChange(value)
     this.setState({
       autocompleteActive: false
+    }, () => {
+      cb()
     })
   }
 
@@ -63,8 +65,9 @@ class TextField extends React.Component {
                   key={obj.value}
                   value={obj.value}
                   onClick={() => {
-                    this.setValue(obj.value)
-                    submit()
+                    this.setValue(obj.value, () => {
+                      submit()
+                    })
                   }}
                 >
                   {obj.label}
