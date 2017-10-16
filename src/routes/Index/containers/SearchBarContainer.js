@@ -5,7 +5,7 @@ import { search } from '@reducers/weather'
 
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
 
-const FORM_NAME = 'search-form'
+export const FORM_NAME = 'search-form'
 
 const validate = (values) => {
   let errors = {}

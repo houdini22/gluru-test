@@ -5,3 +5,35 @@
   text-align: left;
   width: 100%;
 }
+
+.form-group {
+  position: relative;
+}
+
+.field-container {
+  position: relative;
+}
+
+.list {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+
+  li {
+    display: block;
+    height: 15px;
+    line-height: 15px;
+    font-size: 11px;
+    padding: 0 4px;
+    color: #000;
+    background-color: #fff;
+
+    &:hover {
+      background-color: lightskyblue;
+    }
+  }
+}

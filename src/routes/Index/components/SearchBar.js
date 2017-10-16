@@ -1,15 +1,17 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import CSSModules from 'react-css-modules'
-import { Field } from 'redux-form'
+import { Field, formValues } from 'redux-form'
 import http from '@modules/http'
 import TextField from '@components/TextField'
+import { FORM_NAME } from '../containers/SearchBarContainer'
 import styles from './SearchBar.module.scss'
 
 export class SearchBarComponent extends React.Component {
   static propTypes = {
     handleSubmit: PropTypes.func.isRequired,
-    searchInProgress: PropTypes.bool.isRequired
+    searchInProgress: PropTypes.bool.isRequired,
+    query: PropTypes.string,
   }
 
   constructor (props) {
@@ -17,6 +19,8 @@ export class SearchBarComponent extends React.Component {
     this.state = {
       autocompleteList: null
     }
+    this.handleKeyUp = this.handleKeyUp.bind(this)
+    this.keyUpTimeout = null
   }
 
   componentDidMount () {
@@ -25,6 +29,21 @@ export class SearchBarComponent extends React.Component {
         autocompleteList: response.data
       })
     })
+  }
+
+  handleKeyUp () {
+    clearTimeout(this.keyUpTimeout)
+    this.keyUpTimeout = setTimeout(() => {
+      http.get('/search/autocomplete', {
+        params: {
+          query: this.props.query
+        }
+      }).then((response) => {
+        this.setState({
+          autocompleteList: response.data
+        })
+      })
+    }, 500)
   }
 
   render () {
@@ -43,6 +62,7 @@ export class SearchBarComponent extends React.Component {
             hideFeedback
             disabled={searchInProgress}
             list={autocompleteList}
+            onKeyUp={this.handleKeyUp}
           />
         </form>
       </div>

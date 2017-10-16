@@ -24,17 +24,32 @@ const query = (query, offset) => {
   return result
 }
 
-const getAutocomplete = () => {
+const getAutocomplete = (query = '') => {
   const result = {
     id: 'search-query-autocomplete',
     items: []
   }
   autocomplete.forEach((str) => {
+    let score
+
+    if (query) {
+      const ratio = similarity.similarity(query, str)
+      if (ratio < 0.2) {
+        return
+      }
+      score = ratio
+    }
     result.items.push({
       value: str,
-      label: str
+      label: str,
+      score
     })
   })
+  if (query) {
+    result.items = result.items.sort((objA, objB) => {
+      return objB.score - objA.score
+    })
+  }
   return result
 }
 

@@ -15,8 +15,34 @@ class TextField extends React.Component {
     list: PropTypes.object,
   }
 
+  constructor (props) {
+    super(props)
+    this.state = {
+      autocompleteActive: false
+    }
+  }
+
+  setValue (value) {
+    this.props.input.onChange(value)
+  }
+
+  componentWillReceiveProps (nextProps) {
+    if (nextProps.meta.active) {
+      this.setState({
+        autocompleteActive: true
+      })
+    } else {
+      setTimeout(() => {
+        this.setState({
+          autocompleteActive: false
+        })
+      }, 250)
+    }
+  }
+
   render () {
     const { input, label, meta: { touched, error }, containerClassName, hideFeedback, list, ...custom } = this.props
+    const { autocompleteActive } = this.state
 
     let validationState = null
     if (touched) {
@@ -24,16 +50,28 @@ class TextField extends React.Component {
     }
 
     return (
-      <FormGroup color={validationState} className={containerClassName}>
-        <Input {...input} {...custom} autoComplete='off' state={validationState}
-               list={list && list.items ? list.id : null}/>
-        {list && list.items && (
-          <datalist id={list.id}>
-            {list.items.map((obj) => {
-              return <option key={obj.value.replace(/\s+/g, '-')} value={obj.value}>{obj.label}</option>
-            })}
-          </datalist>
-        )}
+      <FormGroup color={validationState} className={containerClassName} styleName='form-group'>
+        <div styleName='field-container'>
+          <Input {...input} {...custom} autoComplete='off' state={validationState}/>
+          {list && list.items && autocompleteActive && (
+            <ul styleName='list'>
+              {list.items.map((obj) => {
+                return <li
+                  key={obj.value}
+                  value={obj.value}
+                  onClick={() => {
+                    this.setValue(obj.value)
+                    this.setState({
+                      autocompleteActive: false
+                    })
+                  }}
+                >
+                  {obj.label}
+                </li>
+              })}
+            </ul>
+          )}
+        </div>
         {!!error && !hideFeedback && touched && (
           <FormFeedback>{error}</FormFeedback>
         )}

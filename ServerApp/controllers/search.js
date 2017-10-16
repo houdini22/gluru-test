@@ -19,7 +19,8 @@ router.get('/', function (req, res) {
 })
 
 router.get('/autocomplete', (req, res) => {
-  res.status(200).json(database.getAutocomplete())
+  const autocomplete = database.getAutocomplete(req.query.query)
+  res.status(200).json(autocomplete)
 })
 
 exports.router = router
