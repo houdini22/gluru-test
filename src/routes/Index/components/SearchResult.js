@@ -19,7 +19,7 @@ export class SearchResultComponent extends React.Component {
         >
           <div>
             <div styleName='icon'>
-              {result.description} ({Math.round(result.score * 100)}%
+              {Math.ceil(result.score * 100)}% match query against stored "{result.description}"
             </div>
             <div styleName='city-name' title={result.description}>
               {result.name}

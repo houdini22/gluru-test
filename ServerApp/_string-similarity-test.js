@@ -16,3 +16,5 @@ console.log('light rain', 'vs', 'light rain', similarity.similarity('light rain'
 console.log('flurry', 'vs', 'rain', similarity.similarity('flurry', 'rain'))
 console.log('light flurry', 'vs', 'light rain', similarity.similarity('light flurry', 'light rain'))
 console.log('light flurry', 'vs', 'heavy rain', similarity.similarity('light flurry', 'heavy rain'))
+console.log('small raindrops', 'vs', 'light rain', similarity.similarity('small raindrops', 'light rain'))
+console.log('tiny storm', 'vs', 'light rain', similarity.similarity('tiny storm', 'light rain'))

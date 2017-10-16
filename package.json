@@ -1,5 +1,5 @@
 {
-  "name": "HakChat",
+  "name": "gluru-weather",
   "version": "0.0.1",
   "main": "index.js",
   "scripts": {
@@ -7,14 +7,10 @@
     "compile": "node build/scripts/compile",
     "build": "cross-env npm run clean && NODE_ENV=production npm run compile",
     "start": "cross-env NODE_ENV=development node build/scripts/start",
-    "test": "cross-env NODE_ENV=test karma start build/karma.config",
-    "test:watch": "npm test -- --watch",
-    "lint": "eslint .",
-    "lint:fix": "npm run lint -- --fix",
-    "server:start": "node server.js"
+    "server:start": "node start_server.js"
   },
   "author": "<baniczek@gmail.com>",
-  "license": "MIT",
+  "license": "Copyright <baniczek@gmail.com>",
   "dependencies": {
     "axios": "^0.16.2",
     "body-parser": "^1.18.2",

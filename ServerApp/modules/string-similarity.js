@@ -24,18 +24,23 @@ const synonyms = {
     1: ['thunderstorm'],
     0.8: ['deluge', 'drizzle', 'flood', 'hail', 'mist', 'monsoon', 'precipitation', 'rainfall', 'rainstorm', 'shower', 'showers', 'sleet', 'stream',
       'torrent', 'cloudburst', 'condensation', 'fall', 'flurry', 'pour', 'pouring', 'raindrops', 'sheets', 'spate', 'spit', 'sprinkle', 'sprinkling',
-      'volley', 'cat-and-dog weather', 'drencher', 'heavy dew', 'liquid sunshine', 'precip', 'sun shower', 'wet stuff', 'window washer', 'sprinkle',
-      'patter', 'bucket', 'pour', 'shower', 'lavish', 'bestow', 'hail', 'storm', 'fall', 'mist', 'drizzle', 'deposit', 'sleet',
-      'come down in buckets']
+      'volley', 'drencher', 'precip', 'sun shower', 'sprinkle',
+      'patter', 'bucket', 'pour', 'shower', 'lavish', 'bestow', 'hail', 'storm', 'fall', 'mist', 'drizzle', 'deposit', 'sleet']
   },
   'storm': {
     1: ['thunderstorm']
   },
   'light': {
-    0: ['heavy'] // negation here?
+    1: ['small', 'tiny'],
+    0: ['heavy'] // is it negation here?
   },
   'heavy': {
-    0: ['light'] // ^
+    1: ['high', 'abundant', 'awkward', 'big', 'bulky', 'burdensome', 'considerable', 'cumbersome', 'excessive', 'fat', 'hefty', 'huge', 'large',
+      'massive', 'substantial', 'unwieldy', 'weighty'],
+    0: ['light'] // ???
+  },
+  'moderate': {
+    1: ['medium']
   }
 }
 
